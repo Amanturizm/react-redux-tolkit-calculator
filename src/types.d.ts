@@ -1,7 +1,10 @@
 import { AppDispatch } from "./app/app";
 
+export type TSetValueFunction = (dispatch: AppDispatch, value: { title: string, value: string }) => void;
+
 export interface ISymbol {
-  value: string;
+  title: string;
+  value?: string;
   width: number;
-  action: (dispatch: AppDispatch, value: string) => void;
+  action: TSetValueFunction;
 }

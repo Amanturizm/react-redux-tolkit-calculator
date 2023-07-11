@@ -1,7 +1,7 @@
 import React from 'react';
+import { useDispatch } from "react-redux";
+import { SYMBOLS } from "../../constants";
 import CalculatorItem from "../CalculatorItem/CalculatorItem";
-import {SYMBOLS} from "../../constants";
-import {useDispatch} from "react-redux";
 
 const CalculatorButtonsBuilder = () => {
   const dispatch = useDispatch();
@@ -11,10 +11,14 @@ const CalculatorButtonsBuilder = () => {
       {
         SYMBOLS.map((item) => (
           <CalculatorItem
-            value={item.value}
+            title={item.title}
             width={item.width}
-            onClick={() => item.action(dispatch, item.value)}
-            key={`calculator-item-${item.value}`}
+            onClick={() =>
+              item.action(
+                dispatch,
+                { title: item.title, value: item.value || '' }
+              )}
+            key={`calculator-item-${item.title}`}
           />
         ))
       }

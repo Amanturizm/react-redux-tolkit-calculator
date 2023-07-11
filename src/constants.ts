@@ -1,26 +1,31 @@
-import { setValue } from "./containers/Calculator/calculatorSlice";
-import { ISymbol } from "./types";
+import { clearValue, removeValue, setResult, setValue } from "./containers/Calculator/calculatorSlice";
+import { ISymbol, TSetValueFunction } from "./types";
 
-const width = 60;
-const margin = 8;
+const width: number = 60;
+const margin: number = 8;
+
+const SET_VALUE: TSetValueFunction = (dispatch, value) => dispatch(setValue(value));
+const action: TSetValueFunction = SET_VALUE;
 
 export const SYMBOLS: ISymbol[] = [
-  { value: '7', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '8', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '9', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '/', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: 'x', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '4', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '5', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '6', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '-', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '+', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '1', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '2', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '3', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '=', width: width * 2 + margin, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '.', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '0', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: '<', width, action: (dispatch, value) => dispatch(setValue(value)) },
-  { value: 'C', width: width * 2 + margin, action: (dispatch, value) => dispatch(setValue(value)) },
+  { title: '7', width, action },
+  { title: '8', width, action },
+  { title: '9', width, action },
+  { title: '÷', value: '/', width, action },
+  { title: '×', value: '*', width, action },
+  { title: '4', width, action },
+  { title: '5', width, action },
+  { title: '6', width, action },
+  { title: '-', width, action },
+  { title: '+', width, action },
+  { title: '1', width, action },
+  { title: '2', width, action },
+  { title: '3', width, action },
+  { title: '=', width: width * 2 + margin, action: (dispatch, value) => dispatch(setResult()) },
+  { title: '.', width, action },
+  { title: '0', width, action },
+  { title: '<', width, action: (dispatch) => dispatch(removeValue()) },
+  { title: 'C', width: width * 2 + margin, action: (dispatch) => dispatch(clearValue()) },
 ];
+
+export const SIGNS: string[] = ['÷', '×', '-', '+', '.'];

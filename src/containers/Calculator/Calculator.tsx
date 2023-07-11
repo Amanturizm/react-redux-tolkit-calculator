@@ -1,15 +1,15 @@
 import React from 'react';
-import CalculatorButtonsBuilder from "../../components/CalculatorButtonsBuilder/CalculatorButtonsBuilder";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/app";
 import CalculatorInput from "../../components/CalculatorInput/CalculatorInput";
-import {useSelector} from "react-redux";
-import {RootState} from "../../app/app";
+import CalculatorButtonsBuilder from "../../components/CalculatorButtonsBuilder/CalculatorButtonsBuilder";
 
 const Calculator = () => {
-  const calculatorInputValue = useSelector((state: RootState) => state.calculator.calculatorValue);
+  const calculatorInputTitle = useSelector((state: RootState) => state.calculator.calculatorTitle);
 
   return (
     <div className="mx-auto mt-5" style={{ width: 340 }}>
-      <CalculatorInput value={calculatorInputValue} />
+      <CalculatorInput value={calculatorInputTitle} />
       <CalculatorButtonsBuilder />
     </div>
   );
