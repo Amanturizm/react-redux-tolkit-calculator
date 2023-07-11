@@ -19,17 +19,19 @@ export const calculatorState = createSlice({
       const { title: currentSymbol, value: currentSymbolValue } = action.payload;
 
       const lastSymbol: string = state.calculatorTitle[state.calculatorTitle.length - 1];
+      const firstSymbol: string = state.calculatorTitle[0];
 
       let isValid: boolean = true;
 
       SIGNS.forEach(sign => {
         if (!isValid) return;
 
-        const isTrue: boolean =
+        const isNotValid: boolean =
+          (!firstSymbol && currentSymbol === '0') ||
           ((lastSymbol === currentSymbol || lastSymbol === sign || state.calculatorTitle.length === 0) && currentSymbol === sign) ||
-           (lastSymbol !== currentSymbol && lastSymbol === sign && SIGNS.indexOf(currentSymbol) !== -1);
+          (lastSymbol !== currentSymbol && lastSymbol === sign && SIGNS.indexOf(currentSymbol) !== -1);
 
-        if (isTrue) isValid = false;
+        if (isNotValid) isValid = false;
       });
 
       state.calculatorTitle += isValid ? currentSymbol : '';
@@ -44,8 +46,14 @@ export const calculatorState = createSlice({
       state.calculatorValue = '';
     },
     setResult: (state) => {
+      const lastSymbol: string = state.calculatorTitle[state.calculatorTitle.length - 1];
+
+      let isValid: boolean = true;
+
+      if (SIGNS.indexOf(lastSymbol) !== -1) isValid = false;
+
       // eslint-disable-next-line no-eval
-      const result: string = (!state.calculatorTitle || eval(state.calculatorValue)) + '';
+      const result: string = (isValid ? eval(state.calculatorValue) || '' : state.calculatorTitle.slice(0, -1)) + '';
 
       state.calculatorTitle = result;
       state.calculatorValue = result;
